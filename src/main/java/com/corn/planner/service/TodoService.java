@@ -34,6 +34,26 @@ public class TodoService {
 		return repo.save(item);
 	}
 
+	public void dropItem(long srcId, long dstId) {
+		if (srcId == dstId)
+			return;
+		TodoItem src = repo.findById(srcId).orElseThrow(()->new RuntimeException("Not found"));
+		TodoItem dst = repo.findById(dstId).orElseThrow(()->new RuntimeException("Not found"));
+		List<TodoItem> all = getSorted();
+		long srcOrder = src.getOrder();
+		long dstOrder = dst.getOrder();
+		if (srcOrder>dstOrder) {
+			for (int i=0; i<srcOrder-dstOrder; ++i) {
+				moveUp(srcId);
+			}
+		} else {
+			for (int i=0; i<dstOrder-srcOrder; ++i) {
+				moveDown(srcId);
+			}
+		}
+	}
+
+
 	public void moveUp(long id) {
 		Optional<TodoItem> itemOpt = repo.findById(id);
 		if (itemOpt.isEmpty())

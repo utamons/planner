@@ -24,19 +24,20 @@ public class TodoController {
 	}
 
 	@GetMapping("/todo/all")
-	public ResponseEntity<List<TodoItemDTO>> allTodo(@RequestParam(name="delay", required = false) Integer delay) throws InterruptedException {
+	public ResponseEntity<List<TodoItemDTO>> allTodo(@RequestParam(name = "delay", required = false) Integer delay) throws InterruptedException {
 		log.debug("REST request to get todo items");
 		if (delay != null) {
-			Thread.sleep(delay*1000);
+			Thread.sleep(delay * 1000);
 		}
 		return ResponseEntity.ok().body(service.getAll());
 	}
 
 	@GetMapping("/todo/{id}")
-	public ResponseEntity<TodoItemDTO> get(@PathVariable("id") long id, @RequestParam(name="delay", required = false) Integer delay) throws InterruptedException {
+	public ResponseEntity<TodoItemDTO> get(@PathVariable("id") long id,
+	                                       @RequestParam(name = "delay", required = false) Integer delay) throws InterruptedException {
 		log.debug("REST request to get todo items");
 		if (delay != null) {
-			Thread.sleep(delay*1000);
+			Thread.sleep(delay * 1000);
 		}
 		TodoItemDTO result = service.find(id);
 		if (result == null)
@@ -76,9 +77,16 @@ public class TodoController {
 		return ResponseEntity.ok().body("ok");
 	}
 
+	@PutMapping("/todo/drop")
+	public ResponseEntity<String> drop(@RequestParam("srcId") long srcId, @RequestParam("dstId") long dstId) {
+		log.debug("REST request to drop item {} to {}", srcId, dstId);
+		service.dropItem(srcId, dstId);
+		return ResponseEntity.ok().body("ok");
+	}
+
 	@DeleteMapping("/todo/{id}")
 	public ResponseEntity<Long> delete(@PathVariable("id") Long id) {
-		log.debug("REST request to delete todo item {}",id);
+		log.debug("REST request to delete todo item {}", id);
 		service.deleteItem(id);
 		return ResponseEntity.ok().build();
 	}
