@@ -24,11 +24,14 @@ public class TodoController {
 	}
 
 	@GetMapping("/todo/all")
-	public ResponseEntity<List<TodoItemDTO>> allTodo(@RequestParam(name = "delay", required = false) Integer delay) throws InterruptedException {
+	public ResponseEntity<List<TodoItemDTO>> allTodo(@RequestParam(name = "delay", required = false) Integer delay,
+	                                                 @RequestParam(name = "errorCode", required = false) Integer errorCode) throws InterruptedException {
 		log.debug("REST request to get todo items");
 		if (delay != null) {
 			Thread.sleep(delay * 1000);
 		}
+		if (errorCode != null)
+			return ResponseEntity.status(errorCode).build();
 		return ResponseEntity.ok().body(service.getAll());
 	}
 
