@@ -28,7 +28,7 @@ public class TodoController {
 	                                                 @RequestParam(name = "errorCode", required = false) Integer errorCode) throws InterruptedException {
 		log.debug("REST request to get todo items");
 		if (delay != null) {
-			Thread.sleep(delay * 1000);
+			Thread.sleep(delay);
 		}
 		if (errorCode != null)
 			return ResponseEntity.status(errorCode).build();
