@@ -2,6 +2,12 @@ package com.corn.planner.controller;
 
 import com.corn.planner.dto.TodoItemDTO;
 import com.corn.planner.service.TodoService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.ExampleObject;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
@@ -48,8 +54,19 @@ public class TodoController {
 		return ResponseEntity.ok().body(result);
 	}
 
+	@Operation(summary = "Post a new todo item")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "Success", content = @Content(mediaType="text/plain", examples = {
+					@ExampleObject(
+							name = "Id of the item created",value =	"1")}))})
 	@PostMapping("/todo")
-	public ResponseEntity<Long> add(@RequestBody TodoItemDTO item) {
+	public ResponseEntity<Long> add(
+			@io.swagger.v3.oas.annotations.parameters.RequestBody(content = @Content(examples = {
+					@ExampleObject(
+							name = "Todo item",
+							summary = "Todo item example",
+							value =	"{\"text\": \"Item1\"}")}))
+			@RequestBody TodoItemDTO item) {
 		log.debug("REST request to add todo item {}", item.getText());
 		return ResponseEntity.ok().body(service.addItem(item).getId());
 	}
