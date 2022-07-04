@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.9.xsd">
+    <changeSet id="00000000000003" author="oleg">
+        <createTable tableName="item_rule" remarks="item rules">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="created_at" type="datetime">
+                <constraints nullable="false" />
+            </column>
+            <column name="completed_at" type="datetime" />
+            <column name="show_at_hour" type="integer" />
+            <column name="hide_at_hour" type="integer" />
+            <column name="show_at_minute" type="integer" />
+            <column name="hide_at_minute" type="integer" />
+            <column name="repeat_type" type="char(7)" remarks="daily, weekly, monthly, yearly, once">
+                <constraints nullable="false" />
+            </column>
+            <column name="every" type="integer" remarks="every day/week, etc."/>
+            <column name="sun" type="boolean" />
+            <column name="mon" type="boolean" />
+            <column name="tue" type="boolean" />
+            <column name="wed" type="boolean" />
+            <column name="thu" type="boolean" />
+            <column name="fri" type="boolean" />
+            <column name="sat" type="boolean" />
+            <column name="on_day_of_month" type="integer" remarks="i.e. every 21st day of month (every or specific)"/>
+            <column name="on_day_of_month_week" type="integer" remarks="i.e. on the 1st Monday (day)"/>
+            <column name="on_day_week" type="integer" remarks="i.e. on the 1st Monday"/>
+            <column name="on_month" type="integer" remarks="i.e. on the 1st July"/>
+        </createTable>
+        <createTable tableName="item" remarks="item">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="varchar(1024)" >
+                <constraints nullable="false" />
+            </column>
+            <column name="order_in_list" type="integer">
+                <constraints nullable="false"/>
+            </column>
+            <column name="order_in_agenda" type="integer"/>
+            <column name="done" type="boolean"/>
+            <column name="item_rule" type="bigint"/>
+            <column name="list" type="bigint"/>
+        </createTable>
+        <createTable tableName="list" remarks="item">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="varchar(1024)" >
+                <constraints nullable="false" />
+            </column>
+            <column name="order_in_list" type="integer">
+                <constraints nullable="false"/>
+            </column>
+            <column name="order_in_agenda" type="integer"/>
+            <column name="item_rule" type="bigint"/>
+            <column name="list" type="bigint"/>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>
