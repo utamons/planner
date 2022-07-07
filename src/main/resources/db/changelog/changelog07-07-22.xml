@@ -5,8 +5,26 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.9.xsd">
     <changeSet id="00000000000004" author="oleg">
-        <addColumn tableName="list">
+        <addColumn tableName="item_list">
             <column name="show_first" type="integer" remarks="Show first N items"/>
         </addColumn>
+        <addForeignKeyConstraint
+                baseTableName="item"
+                baseColumnNames="rule_id"
+                constraintName="item_rule"
+                referencedTableName="rule"
+                referencedColumnNames="id" />
+        <addForeignKeyConstraint
+                baseTableName="item"
+                baseColumnNames="item_list_id"
+                constraintName="item_item_list"
+                referencedTableName="item_list"
+                referencedColumnNames="id" />
+        <addForeignKeyConstraint
+                baseTableName="item_list"
+                baseColumnNames="rule_id"
+                constraintName="list_rule"
+                referencedTableName="rule"
+                referencedColumnNames="id" />
     </changeSet>
 </databaseChangeLog>

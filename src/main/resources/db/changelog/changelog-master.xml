@@ -7,4 +7,5 @@
     <include file="db/changelog/init.xml" relativeToChangelogFile="false"/>
     <include file="db/changelog/changelog09-06-22.xml" relativeToChangelogFile="false"/>
     <include file="db/changelog/changelog04-07-22.xml" relativeToChangelogFile="false"/>
+    <include file="db/changelog/changelog07-07-22.xml" relativeToChangelogFile="false"/>
 </databaseChangeLog>

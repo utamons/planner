@@ -5,7 +5,7 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.9.xsd">
     <changeSet id="00000000000003" author="oleg">
-        <createTable tableName="item_rule" remarks="item rules">
+        <createTable tableName="rule" remarks="item/list rules">
             <column name="id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
@@ -45,10 +45,10 @@
             </column>
             <column name="order_in_agenda" type="integer"/>
             <column name="done" type="boolean"/>
-            <column name="item_rule" type="bigint"/>
-            <column name="list" type="bigint"/>
+            <column name="rule_id" type="bigint"/>
+            <column name="item_list_id" type="bigint"/>
         </createTable>
-        <createTable tableName="list" remarks="item">
+        <createTable tableName="item_list" remarks="item">
             <column name="id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
@@ -59,8 +59,7 @@
                 <constraints nullable="false"/>
             </column>
             <column name="order_in_agenda" type="integer"/>
-            <column name="item_rule" type="bigint"/>
-            <column name="list" type="bigint"/>
+            <column name="rule_id" type="bigint"/>
         </createTable>
     </changeSet>
 </databaseChangeLog>
