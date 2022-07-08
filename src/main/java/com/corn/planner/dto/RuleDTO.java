@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.time.LocalDateTime;
 
+@SuppressWarnings("unused")
 public class RuleDTO {
 	private final Long id;
 

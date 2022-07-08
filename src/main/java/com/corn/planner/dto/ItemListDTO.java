@@ -4,6 +4,7 @@ package com.corn.planner.dto;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+@SuppressWarnings("unused")
 public class ItemListDTO {
 	private final Long id;
 
