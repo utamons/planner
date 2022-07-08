@@ -1,6 +1,9 @@
 package com.corn.planner.dto;
 
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class ItemListDTO {
 	private final Long id;
 
@@ -10,16 +13,28 @@ public class ItemListDTO {
 
 	private final Integer orderInAgenda;
 
-	private final Long ruleId;
+	private final RuleDTO rule;
 
 	private final Integer showFirst;
 
-	public ItemListDTO(Long id, String name, Integer orderInList, Integer orderInAgenda, Long ruleId, Integer showFirst) {
+	@JsonCreator
+	public ItemListDTO(@JsonProperty("id")
+	                   Long id,
+	                   @JsonProperty("name")
+	                   String name,
+	                   @JsonProperty("orderInList")
+	                   Integer orderInList,
+	                   @JsonProperty("orderInAgenda")
+	                   Integer orderInAgenda,
+	                   @JsonProperty("rule")
+	                   RuleDTO rule,
+	                   @JsonProperty("showFirst")
+	                   Integer showFirst) {
 		this.id = id;
 		this.name = name;
 		this.orderInList = orderInList;
 		this.orderInAgenda = orderInAgenda;
-		this.ruleId = ruleId;
+		this.rule = rule;
 		this.showFirst = showFirst;
 	}
 
@@ -39,8 +54,8 @@ public class ItemListDTO {
 		return orderInAgenda;
 	}
 
-	public Long getRuleId() {
-		return ruleId;
+	public RuleDTO getRule() {
+		return rule;
 	}
 
 	public Integer getShowFirst() {

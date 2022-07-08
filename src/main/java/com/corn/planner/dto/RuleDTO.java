@@ -1,6 +1,9 @@
 package com.corn.planner.dto;
 
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.time.LocalDateTime;
 
 public class RuleDTO {
@@ -44,25 +47,46 @@ public class RuleDTO {
 
 	private final Integer onMonth;
 
-	public RuleDTO(Long id,
+	@JsonCreator
+	public RuleDTO(@JsonProperty("id")
+	               Long id,
+	               @JsonProperty("createdAt")
 	               LocalDateTime createdAt,
+	               @JsonProperty("completedAt")
 	               LocalDateTime completedAt,
+	               @JsonProperty("showAtHour")
 	               Integer showAtHour,
+	               @JsonProperty("hideAtHour")
 	               Integer hideAtHour,
+	               @JsonProperty("showAtMinute")
 	               Integer showAtMinute,
+	               @JsonProperty("hideAtMinute")
 	               Integer hideAtMinute,
+	               @JsonProperty("repeatType")
 	               String repeatType,
+	               @JsonProperty("every")
 	               Integer every,
+	               @JsonProperty("sun")
 	               Boolean sun,
+	               @JsonProperty("mon")
 	               Boolean mon,
+	               @JsonProperty("tue")
 	               Boolean tue,
+	               @JsonProperty("wed")
 	               Boolean wed,
+	               @JsonProperty("thu")
 	               Boolean thu,
+	               @JsonProperty("fri")
 	               Boolean fri,
+	               @JsonProperty("sat")
 	               Boolean sat,
+	               @JsonProperty("onDayOfMonth")
 	               Integer onDayOfMonth,
+	               @JsonProperty("onDayOfMonthWeek")
 	               Integer onDayOfMonthWeek,
+	               @JsonProperty("onDayWeek")
 	               Integer onDayWeek,
+	               @JsonProperty("onMonth")
 	               Integer onMonth) {
 		this.id = id;
 		this.createdAt = createdAt;
