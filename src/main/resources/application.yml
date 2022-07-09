@@ -16,7 +16,7 @@ spring:
     driver-class-name: org.mariadb.jdbc.Driver
   jpa:
     database: MYSQL
-    show-sql: true
+    show-sql: false
   liquibase:
     change-log: classpath:db/changelog/changelog-master.xml
 

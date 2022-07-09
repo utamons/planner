@@ -16,7 +16,7 @@ spring:
     driver-class-name: org.h2.Driver
   jpa:
     database: H2
-    show-sql: true
+    show-sql: false
   liquibase:
     change-log: classpath:db/changelog/changelog-master.xml
 
