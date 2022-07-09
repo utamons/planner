@@ -2,11 +2,16 @@ package com.corn.planner.dto;
 
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
 import java.time.LocalDateTime;
 
 @SuppressWarnings("unused")
+@JsonDeserialize(builder = RuleDTO.RuleDTOBuilder.class)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class RuleDTO {
 	private final Long id;
 
@@ -48,46 +53,26 @@ public class RuleDTO {
 
 	private final Integer onMonth;
 
-	@JsonCreator
-	public RuleDTO(@JsonProperty("id")
+	private RuleDTO(@JsonProperty("id")
 	               Long id,
-	               @JsonProperty("createdAt")
 	               LocalDateTime createdAt,
-	               @JsonProperty("completedAt")
 	               LocalDateTime completedAt,
-	               @JsonProperty("showAtHour")
 	               Integer showAtHour,
-	               @JsonProperty("hideAtHour")
 	               Integer hideAtHour,
-	               @JsonProperty("showAtMinute")
 	               Integer showAtMinute,
-	               @JsonProperty("hideAtMinute")
 	               Integer hideAtMinute,
-	               @JsonProperty("repeatType")
 	               String repeatType,
-	               @JsonProperty("every")
 	               Integer every,
-	               @JsonProperty("sun")
 	               Boolean sun,
-	               @JsonProperty("mon")
 	               Boolean mon,
-	               @JsonProperty("tue")
 	               Boolean tue,
-	               @JsonProperty("wed")
 	               Boolean wed,
-	               @JsonProperty("thu")
 	               Boolean thu,
-	               @JsonProperty("fri")
 	               Boolean fri,
-	               @JsonProperty("sat")
 	               Boolean sat,
-	               @JsonProperty("onDayOfMonth")
 	               Integer onDayOfMonth,
-	               @JsonProperty("onDayOfMonthWeek")
 	               Integer onDayOfMonthWeek,
-	               @JsonProperty("onDayWeek")
 	               Integer onDayWeek,
-	               @JsonProperty("onMonth")
 	               Integer onMonth) {
 		this.id = id;
 		this.createdAt = createdAt;
@@ -189,5 +174,158 @@ public class RuleDTO {
 
 	public Integer getOnMonth() {
 		return onMonth;
+	}
+
+	public static final class RuleDTOBuilder {
+		private Long          id;
+		private LocalDateTime createdAt;
+		private LocalDateTime completedAt;
+		private Integer       showAtHour;
+		private Integer       hideAtHour;
+		private Integer       showAtMinute;
+		private Integer       hideAtMinute;
+		private String        repeatType;
+		private Integer       every;
+		private Boolean       sun;
+		private Boolean       mon;
+		private Boolean       tue;
+		private Boolean       wed;
+		private Boolean       thu;
+		private Boolean       fri;
+		private Boolean       sat;
+		private Integer       onDayOfMonth;
+		private Integer       onDayOfMonthWeek;
+		private Integer       onDayWeek;
+		private Integer       onMonth;
+
+		private RuleDTOBuilder() {
+		}
+
+		public static RuleDTOBuilder aRuleDTO() {
+			return new RuleDTOBuilder();
+		}
+
+		public RuleDTOBuilder withId(Long id) {
+			this.id = id;
+			return this;
+		}
+
+		public RuleDTOBuilder withCreatedAt(LocalDateTime createdAt) {
+			this.createdAt = createdAt;
+			return this;
+		}
+
+		public RuleDTOBuilder withCompletedAt(LocalDateTime completedAt) {
+			this.completedAt = completedAt;
+			return this;
+		}
+
+		public RuleDTOBuilder withShowAtHour(Integer showAtHour) {
+			this.showAtHour = showAtHour;
+			return this;
+		}
+
+		public RuleDTOBuilder withHideAtHour(Integer hideAtHour) {
+			this.hideAtHour = hideAtHour;
+			return this;
+		}
+
+		public RuleDTOBuilder withShowAtMinute(Integer showAtMinute) {
+			this.showAtMinute = showAtMinute;
+			return this;
+		}
+
+		public RuleDTOBuilder withHideAtMinute(Integer hideAtMinute) {
+			this.hideAtMinute = hideAtMinute;
+			return this;
+		}
+
+		public RuleDTOBuilder withRepeatType(String repeatType) {
+			this.repeatType = repeatType;
+			return this;
+		}
+
+		public RuleDTOBuilder withEvery(Integer every) {
+			this.every = every;
+			return this;
+		}
+
+		public RuleDTOBuilder withSun(Boolean sun) {
+			this.sun = sun;
+			return this;
+		}
+
+		public RuleDTOBuilder withMon(Boolean mon) {
+			this.mon = mon;
+			return this;
+		}
+
+		public RuleDTOBuilder withTue(Boolean tue) {
+			this.tue = tue;
+			return this;
+		}
+
+		public RuleDTOBuilder withWed(Boolean wed) {
+			this.wed = wed;
+			return this;
+		}
+
+		public RuleDTOBuilder withThu(Boolean thu) {
+			this.thu = thu;
+			return this;
+		}
+
+		public RuleDTOBuilder withFri(Boolean fri) {
+			this.fri = fri;
+			return this;
+		}
+
+		public RuleDTOBuilder withSat(Boolean sat) {
+			this.sat = sat;
+			return this;
+		}
+
+		public RuleDTOBuilder withOnDayOfMonth(Integer onDayOfMonth) {
+			this.onDayOfMonth = onDayOfMonth;
+			return this;
+		}
+
+		public RuleDTOBuilder withOnDayOfMonthWeek(Integer onDayOfMonthWeek) {
+			this.onDayOfMonthWeek = onDayOfMonthWeek;
+			return this;
+		}
+
+		public RuleDTOBuilder withOnDayWeek(Integer onDayWeek) {
+			this.onDayWeek = onDayWeek;
+			return this;
+		}
+
+		public RuleDTOBuilder withOnMonth(Integer onMonth) {
+			this.onMonth = onMonth;
+			return this;
+		}
+
+		public RuleDTO build() {
+			return new RuleDTO(id,
+			                   createdAt,
+			                   completedAt,
+			                   showAtHour,
+			                   hideAtHour,
+			                   showAtMinute,
+			                   hideAtMinute,
+			                   repeatType,
+			                   every,
+			                   sun,
+			                   mon,
+			                   tue,
+			                   wed,
+			                   thu,
+			                   fri,
+			                   sat,
+			                   onDayOfMonth,
+			                   onDayOfMonthWeek,
+			                   onDayWeek,
+			                   onMonth);
+		}
 	}
 }

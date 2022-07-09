@@ -1,10 +1,12 @@
 package com.corn.planner.dto;
 
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 @SuppressWarnings("unused")
+@JsonDeserialize(builder = ItemDTO.ItemDTOBuilder.class)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class ItemDTO {
 	private final Long id;
 
@@ -20,20 +22,12 @@ public class ItemDTO {
 
 	private final Long itemListId;
 
-	@JsonCreator
-	public ItemDTO(@JsonProperty("id")
-			       Long id,
-	               @JsonProperty("name")
+	private ItemDTO(Long id,
 	               String name,
-	               @JsonProperty("orderInList")
 	               Integer orderInList,
-	               @JsonProperty("orderInAgenda")
 	               Integer orderInAgenda,
-	               @JsonProperty("done")
 	               Boolean done,
-	               @JsonProperty("rule")
 	               RuleDTO rule,
-	               @JsonProperty("itemListId")
 	               Long itemListId) {
 		this.id = id;
 		this.name = name;
@@ -70,5 +64,62 @@ public class ItemDTO {
 
 	public Long getItemListId() {
 		return itemListId;
+	}
+
+
+	public static final class ItemDTOBuilder {
+		private Long    id;
+		private String  name;
+		private Integer orderInList;
+		private Integer orderInAgenda;
+		private Boolean done;
+		private RuleDTO rule;
+		private Long    itemListId;
+
+		private ItemDTOBuilder() {
+		}
+
+		public static ItemDTOBuilder anItemDTO() {
+			return new ItemDTOBuilder();
+		}
+
+		public ItemDTOBuilder withId(Long id) {
+			this.id = id;
+			return this;
+		}
+
+		public ItemDTOBuilder withName(String name) {
+			this.name = name;
+			return this;
+		}
+
+		public ItemDTOBuilder withOrderInList(Integer orderInList) {
+			this.orderInList = orderInList;
+			return this;
+		}
+
+		public ItemDTOBuilder withOrderInAgenda(Integer orderInAgenda) {
+			this.orderInAgenda = orderInAgenda;
+			return this;
+		}
+
+		public ItemDTOBuilder withDone(Boolean done) {
+			this.done = done;
+			return this;
+		}
+
+		public ItemDTOBuilder withRule(RuleDTO rule) {
+			this.rule = rule;
+			return this;
+		}
+
+		public ItemDTOBuilder withItemListId(Long itemListId) {
+			this.itemListId = itemListId;
+			return this;
+		}
+
+		public ItemDTO build() {
+			return new ItemDTO(id, name, orderInList, orderInAgenda, done, rule, itemListId);
+		}
 	}
 }

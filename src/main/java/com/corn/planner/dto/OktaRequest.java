@@ -2,7 +2,6 @@ package com.corn.planner.dto;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import liquibase.pro.packaged.S;
 
 public class OktaRequest {
 	private final String env;

@@ -14,14 +14,13 @@ public class ItemListMapper {
 	}
 
 	public static ItemListDTO toDTO(ItemList entity) {
-		return new ItemListDTO(
-				entity.getId(),
-				entity.getName(),
-				entity.getOrderInList(),
-				entity.getOrderInAgenda(),
-				RuleMapper.toDTO(entity.getRule()),
-				entity.getShowFirst()
-		);
+		return ItemListDTO.ItemListDTOBuilder.anItemListDTO()
+		                                     .withId(entity.getId())
+				.withName(entity.getName())
+				.withOrderInList(entity.getOrderInList())
+				.withOrderInAgenda(entity.getOrderInAgenda())
+				.withRule(RuleMapper.toDTO(entity.getRule()))
+				.withShowFirst(entity.getShowFirst())
+				.build();
 	}
-
 }
