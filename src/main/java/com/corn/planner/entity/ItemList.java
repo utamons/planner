@@ -22,13 +22,13 @@ public class ItemList {
 	@Column(name = "order_in_agenda")
 	private Integer orderInAgenda;
 
-	@ManyToOne
+	@ManyToOne(cascade=CascadeType.PERSIST)
 	private Rule rule;
 
 	@Column(name = "show_first")
 	private Integer showFirst;
 
-	@OneToMany
+	@OneToMany(targetEntity=Item.class, mappedBy = "itemList")
 	private List<Item> items;
 
 	public void setId(Long id) {
