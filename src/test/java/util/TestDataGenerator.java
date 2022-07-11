@@ -1,5 +1,6 @@
 package util;
 
+import com.corn.planner.dto.ItemDTO;
 import com.corn.planner.dto.ItemListDTO;
 import com.corn.planner.dto.RuleDTO;
 import org.apache.commons.lang3.BooleanUtils;
@@ -46,6 +47,19 @@ public class TestDataGenerator {
 				.withOrderInAgenda(nextInt())
 				.withOrderInList(nextInt())
 				.withName(randomAlphabetic(10))
+				.build();
+	}
+
+	public static ItemDTO itemDTO() {
+		return ItemDTO.ItemDTOBuilder
+				.anItemDTO()
+				.withId(nextLong())
+				.withName(randomAlphabetic(10))
+				.withOrderInList(nextInt())
+				.withOrderInAgenda(nextInt())
+				.withDone(nextBoolean())
+				.withRule(ruleDTO())
+				.withItemListId(nextLong())
 				.build();
 	}
 }
