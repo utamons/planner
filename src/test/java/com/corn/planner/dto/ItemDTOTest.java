@@ -7,10 +7,9 @@ import util.TestDataGenerator;
 
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 import static org.apache.commons.lang3.RandomUtils.*;
-import static org.apache.commons.lang3.RandomUtils.nextLong;
-import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static util.TestDataGenerator.itemDTO;
 
 @PlannerTest
 public class ItemDTOTest {
@@ -36,7 +35,7 @@ public class ItemDTOTest {
 		final int     orderInList   = nextInt();
 		final int     orderInAgenda = nextInt();
 		final boolean done          = nextBoolean();
-		final RuleDTO ruleDTO       = TestDataGenerator.ruleDTO();
+		final RuleDTO ruleDTO       = TestDataGenerator.nextRuleDTO();
 		final long    itemListId    = nextLong();
 
 		final ItemDTO dto = ItemDTO.ItemDTOBuilder

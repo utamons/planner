@@ -13,7 +13,7 @@ import util.PlannerTest;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static util.TestDataGenerator.itemListDTO;
+import static util.TestDataGenerator.nextItemListDTO;
 
 @PlannerTest
 @Transactional
@@ -28,7 +28,7 @@ public class ItemListServiceTest {
 	@Test
 	@DisplayName("ItemList should be created")
 	public void createTest() {
-		ItemListDTO dto = itemListDTO();
+		ItemListDTO dto = nextItemListDTO();
 		long id = service.create(dto);
 		assertThat(id,is(notNullValue()));
 
