@@ -13,7 +13,7 @@ import util.PlannerTest;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static util.TestDataGenerator.nextItemListDTO;
+import static util.TestDataUtil.nextItemListDTO;
 
 @PlannerTest
 @Transactional

@@ -6,18 +6,20 @@ import com.corn.planner.dto.RuleDTO;
 import com.corn.planner.entity.Item;
 import com.corn.planner.entity.ItemList;
 import com.corn.planner.entity.Rule;
-import liquibase.pro.packaged.I;
 
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.function.BiFunction;
 import java.util.function.Supplier;
 
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 import static org.apache.commons.lang3.RandomUtils.*;
 
-public class TestDataGenerator {
+public class TestDataUtil {
 
 	public static RuleDTO nextRuleDTO() {
 		return RuleDTO.RuleDTOBuilder
@@ -75,13 +77,16 @@ public class TestDataGenerator {
 	}
 
 	public static ItemListDTO nextItemListDTO() {
+		long id = nextLong();
 		return ItemListDTO.ItemListDTOBuilder
 				.anItemListDTO()
+				.withId(id)
 				.withShowFirst(nextInt())
 				.withRule(nextRuleDTO())
 				.withOrderInAgenda(nextInt())
 				.withOrderInList(nextInt())
 				.withName(randomAlphabetic(10))
+				.withItems(nextList(() -> nextItemDTO(id),10))
 				.build();
 	}
 
@@ -113,7 +118,7 @@ public class TestDataGenerator {
 		return item;
 	}
 
-	public static ItemDTO nextItemDTO() {
+	public static ItemDTO nextItemDTO(long itemListId) {
 		return ItemDTO.ItemDTOBuilder
 				.anItemDTO()
 				.withId(nextLong())
@@ -122,7 +127,7 @@ public class TestDataGenerator {
 				.withOrderInAgenda(nextInt())
 				.withDone(nextBoolean())
 				.withRule(nextRuleDTO())
-				.withItemListId(nextLong())
+				.withItemListId(itemListId)
 				.build();
 	}
 
@@ -132,5 +137,35 @@ public class TestDataGenerator {
 			result.add(supplier.get());
 		}
 		return result;
+	}
+
+	public static <T,U> boolean areEqual(List<T> tList, List<U> uList, BiFunction<T,U,Boolean> biEqual) {
+		return tList.stream()
+		            .map(t -> uList.stream().filter((u -> biEqual.apply(t, u))).findFirst())
+		            .noneMatch(Optional::isEmpty);
+	}
+
+	public static boolean isEqual(Rule rule, RuleDTO ruleDTO) {
+		return
+				Objects.equals(rule.getId(), ruleDTO.getId()) &&
+				Objects.equals(rule.getCreatedAt(), ruleDTO.getCreatedAt()) &&
+				Objects.equals(rule.getCompletedAt(), ruleDTO.getCompletedAt()) &&
+				Objects.equals(rule.getShowAtHour(), ruleDTO.getShowAtHour()) &&
+				Objects.equals(rule.getHideAtHour(), ruleDTO.getHideAtHour()) &&
+				Objects.equals(rule.getShowAtMinute(), ruleDTO.getShowAtMinute()) &&
+				Objects.equals(rule.getHideAtMinute(), ruleDTO.getHideAtMinute()) &&
+				Objects.equals(rule.getRepeatType(), ruleDTO.getRepeatType()) &&
+				Objects.equals(rule.getEvery(), ruleDTO.getEvery()) &&
+				Objects.equals(rule.isSun(), ruleDTO.getSun()) &&
+				Objects.equals(rule.isMon(), ruleDTO.getMon()) &&
+				Objects.equals(rule.isTue(), ruleDTO.getTue()) &&
+				Objects.equals(rule.isWed(), ruleDTO.getWed()) &&
+				Objects.equals(rule.isThu(), ruleDTO.getThu()) &&
+				Objects.equals(rule.isFri(), ruleDTO.getFri()) &&
+				Objects.equals(rule.isSat(), ruleDTO.getSat()) &&
+				Objects.equals(rule.getOnDayOfMonth(), ruleDTO.getOnDayOfMonth()) &&
+				Objects.equals(rule.getOnDayOfMonthWeek(), ruleDTO.getOnDayOfMonthWeek()) &&
+				Objects.equals(rule.getOnDayWeek(), ruleDTO.getOnDayWeek()) &&
+				Objects.equals(rule.getOnMonth(), ruleDTO.getOnMonth());
 	}
 }

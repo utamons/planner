@@ -8,8 +8,8 @@ import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 import static org.apache.commons.lang3.RandomUtils.*;
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static util.TestDataGenerator.nextItemList;
-import static util.TestDataGenerator.nextRule;
+import static util.TestDataUtil.nextItemList;
+import static util.TestDataUtil.nextRule;
 
 @PlannerTest
 public class ItemTest {

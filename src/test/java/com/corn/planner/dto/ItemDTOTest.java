@@ -3,7 +3,7 @@ package com.corn.planner.dto;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import util.PlannerTest;
-import util.TestDataGenerator;
+import util.TestDataUtil;
 
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 import static org.apache.commons.lang3.RandomUtils.*;
@@ -35,7 +35,7 @@ public class ItemDTOTest {
 		final int     orderInList   = nextInt();
 		final int     orderInAgenda = nextInt();
 		final boolean done          = nextBoolean();
-		final RuleDTO ruleDTO       = TestDataGenerator.nextRuleDTO();
+		final RuleDTO ruleDTO       = TestDataUtil.nextRuleDTO();
 		final long    itemListId    = nextLong();
 
 		final ItemDTO dto = ItemDTO.ItemDTOBuilder

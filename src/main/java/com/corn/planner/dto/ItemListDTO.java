@@ -3,6 +3,8 @@ package com.corn.planner.dto;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
+import java.util.List;
+
 @SuppressWarnings("unused")
 @JsonDeserialize(builder = ItemListDTO.ItemListDTOBuilder.class)
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -19,18 +21,21 @@ public class ItemListDTO {
 
 	private final Integer showFirst;
 
+	private final List<ItemDTO> items;
+
 	private ItemListDTO(Long id,
-	                   String name,
-	                   Integer orderInList,
-	                   Integer orderInAgenda,
-	                   RuleDTO rule,
-	                   Integer showFirst) {
+	                    String name,
+	                    Integer orderInList,
+	                    Integer orderInAgenda,
+	                    RuleDTO rule,
+	                    Integer showFirst, List<ItemDTO> items) {
 		this.id = id;
 		this.name = name;
 		this.orderInList = orderInList;
 		this.orderInAgenda = orderInAgenda;
 		this.rule = rule;
 		this.showFirst = showFirst;
+		this.items = items;
 	}
 
 	public Long getId() {
@@ -57,6 +62,9 @@ public class ItemListDTO {
 		return showFirst;
 	}
 
+	public List<ItemDTO> getItems() {
+		return items;
+	}
 
 	public static final class ItemListDTOBuilder {
 		private Long    id;
@@ -65,6 +73,8 @@ public class ItemListDTO {
 		private Integer orderInAgenda;
 		private RuleDTO rule;
 		private Integer showFirst;
+
+		private List<ItemDTO> items;
 
 		private ItemListDTOBuilder() {
 		}
@@ -103,8 +113,13 @@ public class ItemListDTO {
 			return this;
 		}
 
+		public ItemListDTOBuilder withItems(List<ItemDTO> items) {
+			this.items = items;
+			return this;
+		}
+
 		public ItemListDTO build() {
-			return new ItemListDTO(id, name, orderInList, orderInAgenda, rule, showFirst);
+			return new ItemListDTO(id, name, orderInList, orderInAgenda, rule, showFirst, items);
 		}
 	}
 }
