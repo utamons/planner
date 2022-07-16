@@ -56,7 +56,7 @@ public class TestDataUtil {
 		rule.setHideAtHour(nextInt());
 		rule.setShowAtMinute(nextInt());
 		rule.setHideAtMinute(nextInt());
-		rule.setRepeatType(randomAlphabetic(10));
+		rule.setRepeatType(randomAlphabetic(7));
 		rule.setEvery(nextInt());
 		rule.setSun(nextBoolean());
 		rule.setMon(nextBoolean());
@@ -72,12 +72,17 @@ public class TestDataUtil {
 		return rule;
 	}
 
-	public static LocalDateTime nextLocalDateTime() {
-		return LocalDateTime.ofEpochSecond(nextLong(0,365241780471L), nextInt(0,999999999), ZoneOffset.UTC);
+	public static Rule nextRule(Long id) {
+		Rule rule = nextRule();
+		rule.setId(id);
+		return rule;
 	}
 
-	public static ItemListDTO nextItemListDTO() {
-		long id = nextLong();
+	public static LocalDateTime nextLocalDateTime() {
+		return LocalDateTime.ofEpochSecond(nextLong(0, 1689497565L), nextInt(0, 999999999), ZoneOffset.UTC);
+	}
+
+	public static ItemListDTO nextItemListDTO(Long id, boolean withItems) {
 		return ItemListDTO.ItemListDTOBuilder
 				.anItemListDTO()
 				.withId(id)
@@ -86,7 +91,7 @@ public class TestDataUtil {
 				.withOrderInAgenda(nextInt())
 				.withOrderInList(nextInt())
 				.withName(randomAlphabetic(10))
-				.withItems(nextList(() -> nextItemDTO(id),10))
+				.withItems(withItems ? nextList(() -> nextItemDTO(id), 10) : null)
 				.build();
 	}
 
@@ -99,15 +104,19 @@ public class TestDataUtil {
 		itemList.setOrderInAgenda(nextInt());
 		itemList.setRule(nextRule());
 		itemList.setShowFirst(nextInt());
-		itemList.setItems(nextList(() -> {
-			Item item = nextItem();
-			item.setItemList(itemList);
-			return item;
-		}, 10));
+		itemList.setItems(nextList(() -> nextItem(itemList), 10));
 		return itemList;
 	}
 
-	public static Item nextItem() {
+	public static ItemList nextItemList(Long  id, Rule rule, List<Item> items) {
+		ItemList itemList = nextItemList();
+		itemList.setId(id);
+		itemList.setRule(rule);
+		itemList.setItems(items);
+		return itemList;
+	}
+
+	public static Item nextItem(ItemList itemList) {
 		Item item = new Item();
 		item.setId(nextLong());
 		item.setName(randomAlphabetic(10));
@@ -115,6 +124,7 @@ public class TestDataUtil {
 		item.setOrderInList(nextInt());
 		item.setDone(nextBoolean());
 		item.setRule(nextRule());
+		item.setItemList(itemList);
 		return item;
 	}
 
@@ -133,16 +143,26 @@ public class TestDataUtil {
 
 	public static <T> List<T> nextList(Supplier<T> supplier, int size) {
 		List<T> result = new ArrayList<>();
-		for (int i=0; i<size; ++i) {
+		for (int i = 0; i < size; ++i) {
 			result.add(supplier.get());
 		}
 		return result;
 	}
 
-	public static <T,U> boolean areEqual(List<T> tList, List<U> uList, BiFunction<T,U,Boolean> biEqual) {
+	public static <T, U> boolean areEqual(List<T> tList, List<U> uList, BiFunction<T, U, Boolean> biEqual) {
 		return tList.stream()
 		            .map(t -> uList.stream().filter((u -> biEqual.apply(t, u))).findFirst())
 		            .noneMatch(Optional::isEmpty);
+	}
+
+	public static boolean isEqual(Item item, ItemDTO dto) {
+		return Objects.equals(item.getId(), dto.getId()) &&
+		       Objects.equals(item.getName(), dto.getName()) &&
+		       Objects.equals(item.getOrderInList(), dto.getOrderInList()) &&
+		       Objects.equals(item.getOrderInAgenda(), dto.getOrderInAgenda()) &&
+		       Objects.equals(item.isDone(), dto.getDone()) &&
+		       isEqual(item.getRule(), dto.getRule()) &&
+		       Objects.equals(item.getItemList().getId(), dto.getItemListId());
 	}
 
 	public static boolean isEqual(Rule rule, RuleDTO ruleDTO) {

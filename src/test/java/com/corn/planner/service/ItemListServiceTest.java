@@ -28,7 +28,7 @@ public class ItemListServiceTest {
 	@Test
 	@DisplayName("ItemList should be created")
 	public void createTest() {
-		ItemListDTO dto = nextItemListDTO();
+		ItemListDTO dto = nextItemListDTO(null, false);
 		long id = service.create(dto);
 		assertThat(id,is(notNullValue()));
 

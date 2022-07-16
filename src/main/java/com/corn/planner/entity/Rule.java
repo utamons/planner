@@ -229,30 +229,4 @@ public class Rule {
 	public Integer getOnMonth() {
 		return onMonth;
 	}
-
-	@Override
-	public String toString() {
-		return "Rule{" +
-		       "id=" + id + '\'' +
-		       "createdAt=" + createdAt + '\'' +
-		       "completedAt=" + completedAt + '\'' +
-		       "showAtHour=" + showAtHour + '\'' +
-		       "hideAtHour=" + hideAtHour + '\'' +
-		       "showAtMinute=" + showAtMinute + '\'' +
-		       "hideAtMinute=" + hideAtMinute + '\'' +
-		       "repeatType=" + repeatType + '\'' +
-		       "every=" + every + '\'' +
-		       "sun=" + sun + '\'' +
-		       "mon=" + mon + '\'' +
-		       "tue=" + tue + '\'' +
-		       "wed=" + wed + '\'' +
-		       "thu=" + thu + '\'' +
-		       "fri=" + fri + '\'' +
-		       "sat=" + sat + '\'' +
-		       "onDayOfMonth=" + onDayOfMonth + '\'' +
-		       "onDayOfMonthWeek=" + onDayOfMonthWeek + '\'' +
-		       "onDayWeek=" + onDayWeek + '\'' +
-		       "onMonth=" + onMonth + '\'' +
-		       '}';
-	}
 }

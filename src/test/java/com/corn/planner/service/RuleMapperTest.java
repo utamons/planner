@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import util.PlannerTest;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static util.TestDataUtil.nextRule;
 import static util.TestDataUtil.nextRuleDTO;
@@ -66,6 +67,18 @@ public class RuleMapperTest {
 		assertThat(dto.getOnDayOfMonthWeek(),is(rule.getOnDayOfMonthWeek()));
 		assertThat(dto.getOnDayWeek(),is(rule.getOnDayWeek()));
 		assertThat(dto.getOnMonth(),is(rule.getOnMonth()));
+	}
+
+	@Test
+	@DisplayName("Null entity should be converted to null")
+	public void toNullDTOTest() {
+		assertThat(RuleMapper.toDTO(null), is(nullValue()));
+	}
+
+	@Test
+	@DisplayName("Null dto should be converted to null")
+	public void toNullEntityTest() {
+		assertThat(RuleMapper.toEntity(null), is(nullValue()));
 	}
 
 }

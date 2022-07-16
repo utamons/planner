@@ -4,9 +4,9 @@ import com.corn.planner.dto.RuleDTO;
 import com.corn.planner.entity.Rule;
 import org.springframework.beans.BeanUtils;
 
-public class RuleMapper {
+public interface RuleMapper {
 
-	public static Rule toEntity(RuleDTO dto) {
+	static Rule toEntity(RuleDTO dto) {
 		if (dto == null)
 			return null;
 		Rule result = new Rule();
@@ -14,7 +14,7 @@ public class RuleMapper {
 		return result;
 	}
 
-	public static RuleDTO toDTO(Rule entity) {
+	static RuleDTO toDTO(Rule entity) {
 		if (entity == null)
 			return null;
 		return RuleDTO.RuleDTOBuilder.aRuleDTO()
