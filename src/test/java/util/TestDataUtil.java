@@ -22,6 +22,11 @@ import com.corn.planner.dto.RuleDTO;
 import com.corn.planner.entity.Item;
 import com.corn.planner.entity.ItemList;
 import com.corn.planner.entity.Rule;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.json.JsonMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import org.springframework.core.io.buffer.DataBuffer;
 
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
@@ -40,10 +45,10 @@ public class TestDataUtil {
 	public static RuleDTO nextRuleDTO() {
 		return RuleDTO.RuleDTOBuilder
 				.aRuleDTO()
-				.withOnMonth(nextInt())
-				.withOnDayWeek(nextInt())
-				.withOnDayOfMonthWeek(nextInt())
-				.withOnDayOfMonth(nextInt())
+				.withOnMonth(nextInt(1, 12))
+				.withOnDayWeek(nextInt(1, 7))
+				.withOnDayOfMonthWeek(nextInt(1,7))
+				.withOnDayOfMonth(nextInt(1, 31))
 				.withSat(nextBoolean())
 				.withFri(nextBoolean())
 				.withThu(nextBoolean())
@@ -51,12 +56,12 @@ public class TestDataUtil {
 				.withTue(nextBoolean())
 				.withMon(nextBoolean())
 				.withSun(nextBoolean())
-				.withEvery(nextInt())
+				.withEvery(nextInt(1, 365))
 				.withRepeatType(randomAlphabetic(7))
-				.withHideAtMinute(nextInt())
-				.withShowAtMinute(nextInt())
-				.withHideAtHour(nextInt())
-				.withShowAtHour(nextInt())
+				.withHideAtMinute(nextInt(0, 59))
+				.withShowAtMinute(nextInt(0, 59))
+				.withHideAtHour(nextInt(0, 23))
+				.withShowAtHour(nextInt(0, 23))
 				.withCompletedAt(nextLocalDateTime())
 				.withCreatedAt(nextLocalDateTime())
 				.build();
@@ -68,12 +73,12 @@ public class TestDataUtil {
 		rule.setId(nextLong());
 		rule.setCreatedAt(nextLocalDateTime());
 		rule.setCompletedAt(nextLocalDateTime());
-		rule.setShowAtHour(nextInt());
-		rule.setHideAtHour(nextInt());
-		rule.setShowAtMinute(nextInt());
-		rule.setHideAtMinute(nextInt());
+		rule.setShowAtHour(nextInt(0,24));
+		rule.setHideAtHour(nextInt(0,24));
+		rule.setShowAtMinute(nextInt(0,59));
+		rule.setHideAtMinute(nextInt(0,59));
 		rule.setRepeatType(randomAlphabetic(7));
-		rule.setEvery(nextInt());
+		rule.setEvery(nextInt(1,365));
 		rule.setSun(nextBoolean());
 		rule.setMon(nextBoolean());
 		rule.setTue(nextBoolean());
@@ -81,9 +86,10 @@ public class TestDataUtil {
 		rule.setThu(nextBoolean());
 		rule.setFri(nextBoolean());
 		rule.setSat(nextBoolean());
-		rule.setOnDayOfMonth(nextInt());
-		rule.setOnDayOfMonthWeek(nextInt());
-		rule.setOnMonth(nextInt());
+		rule.setOnDayWeek(nextInt(1,7));
+		rule.setOnDayOfMonth(nextInt(1,31));
+		rule.setOnDayOfMonthWeek(nextInt(1,7));
+		rule.setOnMonth(nextInt(1,12));
 
 		return rule;
 	}
@@ -203,5 +209,33 @@ public class TestDataUtil {
 				Objects.equals(rule.getOnDayOfMonthWeek(), ruleDTO.getOnDayOfMonthWeek()) &&
 				Objects.equals(rule.getOnDayWeek(), ruleDTO.getOnDayWeek()) &&
 				Objects.equals(rule.getOnMonth(), ruleDTO.getOnMonth());
+	}
+
+	public static boolean isEqualWithoutId(Rule rule, RuleDTO ruleDTO) {
+		return
+				Objects.equals(rule.getCreatedAt(), ruleDTO.getCreatedAt()) &&
+				Objects.equals(rule.getCompletedAt(), ruleDTO.getCompletedAt()) &&
+				Objects.equals(rule.getShowAtHour(), ruleDTO.getShowAtHour()) &&
+				Objects.equals(rule.getHideAtHour(), ruleDTO.getHideAtHour()) &&
+				Objects.equals(rule.getShowAtMinute(), ruleDTO.getShowAtMinute()) &&
+				Objects.equals(rule.getHideAtMinute(), ruleDTO.getHideAtMinute()) &&
+				Objects.equals(rule.getRepeatType(), ruleDTO.getRepeatType()) &&
+				Objects.equals(rule.getEvery(), ruleDTO.getEvery()) &&
+				Objects.equals(rule.isSun(), ruleDTO.getSun()) &&
+				Objects.equals(rule.isMon(), ruleDTO.getMon()) &&
+				Objects.equals(rule.isTue(), ruleDTO.getTue()) &&
+				Objects.equals(rule.isWed(), ruleDTO.getWed()) &&
+				Objects.equals(rule.isThu(), ruleDTO.getThu()) &&
+				Objects.equals(rule.isFri(), ruleDTO.getFri()) &&
+				Objects.equals(rule.isSat(), ruleDTO.getSat()) &&
+				Objects.equals(rule.getOnDayOfMonth(), ruleDTO.getOnDayOfMonth()) &&
+				Objects.equals(rule.getOnDayOfMonthWeek(), ruleDTO.getOnDayOfMonthWeek()) &&
+				Objects.equals(rule.getOnDayWeek(), ruleDTO.getOnDayWeek()) &&
+				Objects.equals(rule.getOnMonth(), ruleDTO.getOnMonth());
+	}
+
+	public static String asJsonString(ItemListDTO dto) throws JsonProcessingException {
+		ObjectMapper mapper = JsonMapper.builder().addModule(new JavaTimeModule()).build();
+		return mapper.writeValueAsString(dto);
 	}
 }

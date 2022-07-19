@@ -45,12 +45,12 @@ public class RuleDTO {
 	private final Integer hideAtHour;
 
 	@Min(0)
-	@Max(60)
+	@Max(59)
 	private final Integer showAtMinute;
 
 
 	@Min(0)
-	@Max(60)
+	@Max(59)
 	private final Integer hideAtMinute;
 
 	@Size(min = 5, max = 7)
