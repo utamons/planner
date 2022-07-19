@@ -18,6 +18,7 @@ package com.corn.planner.service;
 
 import com.corn.planner.dto.ItemListDTO;
 import com.corn.planner.dto.RuleDTO;
+import com.corn.planner.entity.Item;
 import com.corn.planner.entity.ItemList;
 import com.corn.planner.entity.Rule;
 import com.corn.planner.repository.ItemListRepository;
@@ -27,9 +28,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import util.PlannerTest;
 
+import java.util.List;
+
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static util.TestDataUtil.nextItemListDTO;
+import static util.TestDataUtil.*;
 
 @PlannerTest
 @Transactional
@@ -80,5 +83,14 @@ public class ItemListServiceTest {
 		assertThat(rule.isThu(),equalTo(ruleDTO.getThu()));
 		assertThat(rule.isTue(),equalTo(ruleDTO.getTue()));
 		assertThat(rule.isWed(),equalTo(ruleDTO.getWed()));
+	}
+
+	@Test
+	@DisplayName("ItemList should read")
+	public void readTest() {
+		final ItemList entity = nextItemList(null, nextRule(null), null);
+		repo.save(entity);
+		List<Item> items = nextList(()->nextItem(entity),10);
+
 	}
 }

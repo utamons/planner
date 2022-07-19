@@ -34,7 +34,7 @@ public class ItemListMapper {
 		this.itemMapper = itemMapper;
 	}
 
-	public static ItemList toEntity(ItemListDTO dto) {
+	public ItemList toEntity(ItemListDTO dto) {
 		ItemList result = new ItemList();
 		BeanUtils.copyProperties(dto,result,"rule");
 		result.setRule(RuleMapper.toEntity(dto.getRule()));

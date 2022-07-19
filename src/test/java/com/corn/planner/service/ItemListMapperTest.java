@@ -39,7 +39,7 @@ public class ItemListMapperTest {
 	@DisplayName("ItemListDTO should be converted to entity")
 	public void toEntityTest() {
 		ItemListDTO dto = nextItemListDTO(null, false);
-		ItemList en = ItemListMapper.toEntity(dto);
+		ItemList en = itemListMapper.toEntity(dto);
 
 		assertThat(en.getId(), is(dto.getId()));
 		assertThat(en.getName(), is(dto.getName()));

@@ -19,6 +19,9 @@ package com.corn.planner.entity;
 import javax.persistence.*;
 import java.util.List;
 
+import static javax.persistence.CascadeType.PERSIST;
+import static javax.persistence.CascadeType.REMOVE;
+
 @SuppressWarnings("unused")
 @Entity
 @Table(name = "item_list")
@@ -38,7 +41,7 @@ public class ItemList {
 	@Column(name = "order_in_agenda")
 	private Integer orderInAgenda;
 
-	@ManyToOne(cascade=CascadeType.PERSIST)
+	@ManyToOne(cascade={PERSIST, REMOVE})
 	private Rule rule;
 
 	@Column(name = "show_first")
