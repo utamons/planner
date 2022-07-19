@@ -17,12 +17,13 @@
 package com.corn.planner.dto;
 
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 
 @SuppressWarnings("unused")
@@ -35,16 +36,28 @@ public class RuleDTO {
 
 	private final LocalDateTime completedAt;
 
+	@Min(0)
+	@Max(23)
 	private final Integer showAtHour;
 
+	@Min(0)
+	@Max(23)
 	private final Integer hideAtHour;
 
+	@Min(0)
+	@Max(60)
 	private final Integer showAtMinute;
 
+
+	@Min(0)
+	@Max(60)
 	private final Integer hideAtMinute;
 
+	@Size(min = 5, max = 7)
 	private final String repeatType;
 
+	@Min(1)
+	@Max(365)
 	private final Integer every;
 
 	private final Boolean sun;
@@ -61,12 +74,20 @@ public class RuleDTO {
 
 	private final Boolean sat;
 
+	@Min(1)
+	@Max(31)
 	private final Integer onDayOfMonth;
 
+	@Min(1)
+	@Max(7)
 	private final Integer onDayOfMonthWeek;
 
+	@Min(1)
+	@Max(7)
 	private final Integer onDayWeek;
 
+	@Min(1)
+	@Max(12)
 	private final Integer onMonth;
 
 	private RuleDTO(@JsonProperty("id")

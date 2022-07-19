@@ -19,6 +19,8 @@ package com.corn.planner.dto;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @SuppressWarnings("unused")
@@ -27,12 +29,14 @@ import java.util.List;
 public class ItemListDTO {
 	private final Long id;
 
+	@NotNull
 	private final String name;
 
 	private final Integer orderInList;
 
 	private final Integer orderInAgenda;
 
+	@Valid
 	private final RuleDTO rule;
 
 	private final Integer showFirst;

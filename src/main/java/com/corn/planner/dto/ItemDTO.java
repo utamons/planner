@@ -18,12 +18,17 @@ package com.corn.planner.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+
 @SuppressWarnings("unused")
 @JsonDeserialize(builder = ItemDTO.ItemDTOBuilder.class)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ItemDTO {
 	private final Long id;
 
+	@NotNull
 	private final String name;
 
 	private final Integer orderInList;
@@ -32,8 +37,10 @@ public class ItemDTO {
 
 	private final Boolean done;
 
+	@Valid
 	private final RuleDTO rule;
 
+	@NotNull
 	private final Long itemListId;
 
 	private ItemDTO(Long id,
