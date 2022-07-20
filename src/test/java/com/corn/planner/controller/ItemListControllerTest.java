@@ -23,6 +23,7 @@ import com.corn.planner.entity.Rule;
 import com.corn.planner.repository.ItemListRepository;
 import com.corn.planner.repository.RuleRepository;
 import com.corn.planner.service.ItemListMapper;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -216,5 +217,22 @@ public class ItemListControllerTest {
 			assertThat(dto.getShowFirst(), is(e.getShowFirst()));
 			assertThat("Items are equal", areEqual(e.getItems(), dto.getItems(), TestDataUtil::isEqualWithoutId));
 		});
+	}
+
+	@Test
+	@DisplayName("ItemController should process EntityNotFoundException")
+	public void entityNotFoundTest() throws Exception {
+		mockMvc.perform(get("/api/list/{id}", Long.MAX_VALUE))
+		                          .andExpect(status().isNotFound());
+	}
+
+	@Test
+	@DisplayName("ItemController should process IllegalArgumentException")
+	public void illegalArgumentTest() throws Exception {
+		final ItemListDTO dto = TestDataUtil.nextItemListDTO(null, false, false);
+		mockMvc.perform(put("/api/list/")
+				                .contentType(MediaType.APPLICATION_JSON)
+				                .content(TestDataUtil.asJson(dto)))
+		       .andExpect(status().isBadRequest());
 	}
 }

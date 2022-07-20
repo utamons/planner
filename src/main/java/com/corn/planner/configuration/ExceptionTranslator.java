@@ -42,33 +42,13 @@ public class ExceptionTranslator {
 		return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
 	}
 
-	@ExceptionHandler(ValidationException.class)
-	public ResponseEntity<Error> validationException(final ValidationException e) {
+	@ExceptionHandler(IllegalArgumentException.class)
+	public ResponseEntity<Error> illegalArgumentException(final IllegalArgumentException e) {
 		Error error = Error.ErrorBuilder
 				.anError()
 				.withMessage(e.getMessage())
 				.withStatus(HttpStatus.BAD_REQUEST.value())
 				.build();
 		return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
-	}
-
-	@ExceptionHandler(RuntimeException.class)
-	public ResponseEntity<Error> runtimeException(final RuntimeException e) {
-		Error error = Error.ErrorBuilder
-				.anError()
-				.withMessage(e.getMessage())
-				.withStatus(HttpStatus.INTERNAL_SERVER_ERROR.value())
-				.build();
-		return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
-	}
-
-	@ExceptionHandler(Exception.class)
-	public ResponseEntity<Error> Exception(final Exception e) {
-		Error error = Error.ErrorBuilder
-				.anError()
-				.withMessage(e.getMessage())
-				.withStatus(HttpStatus.INTERNAL_SERVER_ERROR.value())
-				.build();
-		return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 }

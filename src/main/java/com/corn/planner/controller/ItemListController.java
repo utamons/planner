@@ -54,6 +54,9 @@ public class ItemListController {
 
 	@PutMapping()
 	public void update(@Valid @RequestBody ItemListDTO dto) {
+		if (dto.getId() == null) {
+			throw new IllegalArgumentException("id is required");
+		}
 		service.update(dto);
 	}
 
