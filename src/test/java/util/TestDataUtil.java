@@ -150,6 +150,18 @@ public class TestDataUtil {
 		return item;
 	}
 
+	public static Item nextItem(Long id, ItemList itemList) {
+		Item item = new Item();
+		item.setId(id);
+		item.setName(randomAlphabetic(10));
+		item.setOrderInAgenda(nextInt());
+		item.setOrderInList(nextInt());
+		item.setDone(nextBoolean());
+		item.setRule(nextRule());
+		item.setItemList(itemList);
+		return item;
+	}
+
 	public static ItemDTO nextItemDTO(long itemListId) {
 		return ItemDTO.ItemDTOBuilder
 				.anItemDTO()
@@ -180,6 +192,15 @@ public class TestDataUtil {
 	public static boolean isEqual(Item item, ItemDTO dto) {
 		return Objects.equals(item.getId(), dto.getId()) &&
 		       Objects.equals(item.getName(), dto.getName()) &&
+		       Objects.equals(item.getOrderInList(), dto.getOrderInList()) &&
+		       Objects.equals(item.getOrderInAgenda(), dto.getOrderInAgenda()) &&
+		       Objects.equals(item.isDone(), dto.getDone()) &&
+		       isEqual(item.getRule(), dto.getRule()) &&
+		       Objects.equals(item.getItemList().getId(), dto.getItemListId());
+	}
+
+	public static boolean isEqualWithoutId(Item item, ItemDTO dto) {
+		return Objects.equals(item.getName(), dto.getName()) &&
 		       Objects.equals(item.getOrderInList(), dto.getOrderInList()) &&
 		       Objects.equals(item.getOrderInAgenda(), dto.getOrderInAgenda()) &&
 		       Objects.equals(item.isDone(), dto.getDone()) &&
@@ -237,5 +258,10 @@ public class TestDataUtil {
 	public static String asJsonString(ItemListDTO dto) throws JsonProcessingException {
 		ObjectMapper mapper = JsonMapper.builder().addModule(new JavaTimeModule()).build();
 		return mapper.writeValueAsString(dto);
+	}
+
+	public static ItemListDTO asObject(String json, Class<ItemListDTO> itemListDTOClass) throws JsonProcessingException {
+		ObjectMapper mapper = JsonMapper.builder().addModule(new JavaTimeModule()).build();
+		return mapper.readValue(json, itemListDTOClass);
 	}
 }
