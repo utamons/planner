@@ -19,12 +19,12 @@ package com.corn.planner.controller;
 import com.corn.planner.dto.ItemListDTO;
 import com.corn.planner.service.ItemListService;
 import org.springframework.http.HttpStatus;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
 
+@SuppressWarnings("unused")
 @RestController
 @CrossOrigin(origins = "*")
 @RequestMapping("/api/list")

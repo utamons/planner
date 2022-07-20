@@ -23,10 +23,10 @@ import com.corn.planner.entity.Item;
 import com.corn.planner.entity.ItemList;
 import com.corn.planner.entity.Rule;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import org.springframework.core.io.buffer.DataBuffer;
 
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
@@ -110,6 +110,19 @@ public class TestDataUtil {
 				.withId(id)
 				.withShowFirst(nextInt())
 				.withRule(nextRuleDTO())
+				.withOrderInAgenda(nextInt())
+				.withOrderInList(nextInt())
+				.withName(randomAlphabetic(10))
+				.withItems(withItems ? nextList(() -> nextItemDTO(id), 10) : null)
+				.build();
+	}
+
+	public static ItemListDTO nextItemListDTO(Long id, boolean withItems, boolean withRule) {
+		return ItemListDTO.ItemListDTOBuilder
+				.anItemListDTO()
+				.withId(id)
+				.withShowFirst(nextInt())
+				.withRule(withRule ? nextRuleDTO() : null)
 				.withOrderInAgenda(nextInt())
 				.withOrderInList(nextInt())
 				.withName(randomAlphabetic(10))
@@ -255,13 +268,20 @@ public class TestDataUtil {
 				Objects.equals(rule.getOnMonth(), ruleDTO.getOnMonth());
 	}
 
-	public static String asJsonString(ItemListDTO dto) throws JsonProcessingException {
+	public static <T> String asJson(T dto) throws JsonProcessingException {
 		ObjectMapper mapper = JsonMapper.builder().addModule(new JavaTimeModule()).build();
 		return mapper.writeValueAsString(dto);
 	}
 
-	public static ItemListDTO asObject(String json, Class<ItemListDTO> itemListDTOClass) throws JsonProcessingException {
+	public static <T> T asObject(String json, Class<T> clazz) throws JsonProcessingException {
 		ObjectMapper mapper = JsonMapper.builder().addModule(new JavaTimeModule()).build();
-		return mapper.readValue(json, itemListDTOClass);
+		return mapper.readValue(json, clazz);
+	}
+
+	public static <T> List<T> asList(String json, Class<T> clazz) throws JsonProcessingException {
+		ObjectMapper mapper = JsonMapper.builder().addModule(new JavaTimeModule()).build();
+		JavaType type = mapper.getTypeFactory().
+		                      constructCollectionType(List.class, clazz);
+		return mapper.readValue(json, type);
 	}
 }

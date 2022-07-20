@@ -21,6 +21,7 @@ import com.corn.planner.dto.RuleDTO;
 import com.corn.planner.entity.ItemList;
 import com.corn.planner.entity.Rule;
 import com.corn.planner.repository.ItemListRepository;
+import com.corn.planner.repository.RuleRepository;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -29,10 +30,12 @@ import java.util.stream.Collectors;
 @Component
 public class ItemListService {
 
+	private final RuleRepository ruleRepository;
 	private final ItemListRepository repo;
 	private final ItemListMapper     mapper;
 
-	public ItemListService(ItemListRepository repository, ItemListMapper mapper) {
+	public ItemListService(RuleRepository ruleRepository, ItemListRepository repository, ItemListMapper mapper) {
+		this.ruleRepository = ruleRepository;
 		this.repo = repository;
 		this.mapper = mapper;
 	}
@@ -63,6 +66,7 @@ public class ItemListService {
 		itemList.setShowFirst(dto.getShowFirst());
 
 		if (dto.getRule() == null) {
+			ruleRepository.delete(itemList.getRule());
 			itemList.setRule(null);
 		} else {
 			Rule    rule    = itemList.getRule();
@@ -84,6 +88,7 @@ public class ItemListService {
 			rule.setOnDayOfMonthWeek(ruleDTO.getOnDayOfMonthWeek());
 			rule.setOnDayWeek(ruleDTO.getOnDayWeek());
 			rule.setOnMonth(ruleDTO.getOnMonth());
+			rule.setCompletedAt(ruleDTO.getCompletedAt());
 		}
 
 		repo.save(itemList);
