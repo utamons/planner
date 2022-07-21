@@ -49,7 +49,10 @@ public class ItemMapper {
 		item.setOrderInList(dto.getOrderInList());
 		item.setOrderInAgenda(dto.getOrderInAgenda());
 		item.setDone(dto.getDone());
-		RuleMapper.updateRule(item.getRule(), dto.getRule());
+		if (dto.getRule() == null)
+			item.setRule(null);
+		else
+			RuleMapper.updateRule(item.getRule(), dto.getRule());
 		item.setItemList(itemList);
 	}
 

@@ -17,9 +17,14 @@
 package com.corn.planner.repository;
 
 import com.corn.planner.entity.Item;
+import com.corn.planner.entity.ItemList;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
+import java.util.List;
+
 public interface ItemRepository extends JpaRepository<Item, Long>, JpaSpecificationExecutor<Item> {
+
+	 List<Item> findAllByItemList(ItemList itemList);
 
 }

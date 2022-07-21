@@ -18,7 +18,10 @@ package com.corn.planner.service;
 
 import com.corn.planner.dto.ItemDTO;
 import com.corn.planner.entity.Item;
+import com.corn.planner.entity.ItemList;
+import com.corn.planner.repository.ItemListRepository;
 import com.corn.planner.repository.ItemRepository;
+import com.corn.planner.repository.RuleRepository;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -28,10 +31,15 @@ import java.util.stream.Collectors;
 public class ItemService {
 
 	private final ItemRepository repo;
+	private final ItemListRepository itemListRepository;
+
+	private final RuleRepository ruleRepository;
 	private final ItemMapper mapper;
 
-	public ItemService(ItemRepository repo, ItemMapper mapper) {
+	public ItemService(ItemRepository repo, ItemListRepository itemListRepository, RuleRepository ruleRepository, ItemMapper mapper) {
 		this.repo = repo;
+		this.itemListRepository = itemListRepository;
+		this.ruleRepository = ruleRepository;
 		this.mapper = mapper;
 	}
 
@@ -46,8 +54,9 @@ public class ItemService {
 		return mapper.toDTO(item);
 	}
 
-	public List<ItemDTO> readAll() {
-		return repo.findAll()
+	public List<ItemDTO> readAllByList(long itemListId) {
+		ItemList itemList = itemListRepository.getReferenceById(itemListId);
+		return repo.findAllByItemList(itemList)
 		           .stream()
 		           .map(mapper::toDTO)
 		           .collect(Collectors.toList());
@@ -55,6 +64,9 @@ public class ItemService {
 
 	public void update(ItemDTO dto) {
 		Item item = repo.getReferenceById(dto.getId());
+		if (dto.getRule() == null && item.getRule() != null) {
+			ruleRepository.delete(item.getRule());
+		}
 		mapper.updateItem(item, dto);
 		repo.save(item);
 	}

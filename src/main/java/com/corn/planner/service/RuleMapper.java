@@ -19,7 +19,6 @@ package com.corn.planner.service;
 import com.corn.planner.dto.RuleDTO;
 import com.corn.planner.entity.Rule;
 import org.springframework.beans.BeanUtils;
-import org.springframework.stereotype.Component;
 
 public interface RuleMapper {
 

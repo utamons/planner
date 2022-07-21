@@ -43,7 +43,7 @@ public class Item {
 	@Column(name = "done")
 	private Boolean done;
 
-	@ManyToOne
+	@ManyToOne(cascade={PERSIST, REMOVE})
 	private Rule rule;
 
 	@ManyToOne(cascade={PERSIST})

@@ -65,7 +65,7 @@ public class ItemListService {
 		itemList.setOrderInAgenda(dto.getOrderInAgenda());
 		itemList.setShowFirst(dto.getShowFirst());
 
-		if (dto.getRule() == null) {
+		if (dto.getRule() == null && itemList.getRule() != null) {
 			ruleRepository.delete(itemList.getRule());
 			itemList.setRule(null);
 		} else {
