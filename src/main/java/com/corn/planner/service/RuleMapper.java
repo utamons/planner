@@ -19,6 +19,7 @@ package com.corn.planner.service;
 import com.corn.planner.dto.RuleDTO;
 import com.corn.planner.entity.Rule;
 import org.springframework.beans.BeanUtils;
+import org.springframework.stereotype.Component;
 
 public interface RuleMapper {
 
@@ -57,4 +58,11 @@ public interface RuleMapper {
 		                             .build();
 	}
 
+	static void updateRule(Rule rule, RuleDTO ruleDTO) {
+		if (ruleDTO.getId().equals(rule.getId())) {
+			BeanUtils.copyProperties(ruleDTO, rule);
+		} else {
+			throw new IllegalArgumentException("Rule id mismatch");
+		}
+	}
 }

@@ -43,6 +43,16 @@ public class ItemMapper {
 		return item;
 	}
 
+	public void updateItem(Item item, ItemDTO dto) {
+		ItemList itemList = repo.getReferenceById(dto.getItemListId());
+		item.setName(dto.getName());
+		item.setOrderInList(dto.getOrderInList());
+		item.setOrderInAgenda(dto.getOrderInAgenda());
+		item.setDone(dto.getDone());
+		RuleMapper.updateRule(item.getRule(), dto.getRule());
+		item.setItemList(itemList);
+	}
+
 	public ItemDTO toDTO(Item en) {
 		return ItemDTO.ItemDTOBuilder
 				.anItemDTO()

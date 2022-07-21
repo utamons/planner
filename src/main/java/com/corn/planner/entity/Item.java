@@ -18,6 +18,9 @@ package com.corn.planner.entity;
 
 import javax.persistence.*;
 
+import static javax.persistence.CascadeType.PERSIST;
+import static javax.persistence.CascadeType.REMOVE;
+
 @SuppressWarnings("unused")
 @Entity
 @Table(name = "item")
@@ -43,7 +46,7 @@ public class Item {
 	@ManyToOne
 	private Rule rule;
 
-	@ManyToOne
+	@ManyToOne(cascade={PERSIST})
 	private ItemList itemList;
 
 	public void setId(Long id) {
