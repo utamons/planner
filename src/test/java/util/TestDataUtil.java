@@ -175,7 +175,19 @@ public class TestDataUtil {
 		return item;
 	}
 
-	public static ItemDTO nextItemDTO(long itemListId) {
+	public static Item nextItem(Long id, ItemList itemList, Rule rule) {
+		Item item = new Item();
+		item.setId(id);
+		item.setName(randomAlphabetic(10));
+		item.setOrderInAgenda(nextInt());
+		item.setOrderInList(nextInt());
+		item.setDone(nextBoolean());
+		item.setRule(rule);
+		item.setItemList(itemList);
+		return item;
+	}
+
+	public static ItemDTO nextItemDTO(Long itemListId) {
 		return ItemDTO.ItemDTOBuilder
 				.anItemDTO()
 				.withId(nextLong())
@@ -187,6 +199,20 @@ public class TestDataUtil {
 				.withItemListId(itemListId)
 				.build();
 	}
+
+	public static ItemDTO nextItemDTO(Long id, Long itemListId, RuleDTO ruleDTO) {
+		return ItemDTO.ItemDTOBuilder
+				.anItemDTO()
+				.withId(id)
+				.withName(randomAlphabetic(10))
+				.withOrderInList(nextInt())
+				.withOrderInAgenda(nextInt())
+				.withDone(nextBoolean())
+				.withRule(ruleDTO)
+				.withItemListId(itemListId)
+				.build();
+	}
+
 
 	public static <T> List<T> nextList(Supplier<T> supplier, int size) {
 		List<T> result = new ArrayList<>();
@@ -207,7 +233,7 @@ public class TestDataUtil {
 		       Objects.equals(item.getName(), dto.getName()) &&
 		       Objects.equals(item.getOrderInList(), dto.getOrderInList()) &&
 		       Objects.equals(item.getOrderInAgenda(), dto.getOrderInAgenda()) &&
-		       Objects.equals(item.isDone(), dto.getDone()) &&
+		       Objects.equals(item.isDone(), dto.isDone()) &&
 		       isEqual(item.getRule(), dto.getRule()) &&
 		       Objects.equals(item.getItemList().getId(), dto.getItemListId());
 	}
@@ -216,7 +242,7 @@ public class TestDataUtil {
 		return Objects.equals(item.getName(), dto.getName()) &&
 		       Objects.equals(item.getOrderInList(), dto.getOrderInList()) &&
 		       Objects.equals(item.getOrderInAgenda(), dto.getOrderInAgenda()) &&
-		       Objects.equals(item.isDone(), dto.getDone()) &&
+		       Objects.equals(item.isDone(), dto.isDone()) &&
 		       isEqual(item.getRule(), dto.getRule()) &&
 		       Objects.equals(item.getItemList().getId(), dto.getItemListId());
 	}
@@ -247,7 +273,6 @@ public class TestDataUtil {
 
 	public static boolean isEqualWithoutId(Rule rule, RuleDTO ruleDTO) {
 		return
-				Objects.equals(rule.getCreatedAt(), ruleDTO.getCreatedAt()) &&
 				Objects.equals(rule.getCompletedAt(), ruleDTO.getCompletedAt()) &&
 				Objects.equals(rule.getShowAtHour(), ruleDTO.getShowAtHour()) &&
 				Objects.equals(rule.getHideAtHour(), ruleDTO.getHideAtHour()) &&

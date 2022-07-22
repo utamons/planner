@@ -22,8 +22,6 @@ import com.corn.planner.entity.ItemList;
 import com.corn.planner.entity.Rule;
 import com.corn.planner.repository.ItemListRepository;
 import com.corn.planner.repository.RuleRepository;
-import com.corn.planner.service.ItemListMapper;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,7 +60,7 @@ public class ItemListControllerTest {
 
 
 	@Test
-	@DisplayName("ItemController should create")
+	@DisplayName("ItemListController should create")
 	@Transactional
 	public void createTest() throws Exception {
 		ItemListDTO dto = TestDataUtil.nextItemListDTO(null, false);
@@ -84,7 +82,7 @@ public class ItemListControllerTest {
 	}
 
 	@Test
-	@DisplayName("ItemController should read")
+	@DisplayName("ItemListController should read")
 	@Transactional
 	public void readTest() throws Exception {
 		final ItemList en = TestDataUtil.nextItemList(null, nextRule(null), null);
@@ -109,7 +107,7 @@ public class ItemListControllerTest {
 	}
 
 	@Test
-	@DisplayName("ItemController should update")
+	@DisplayName("ItemListController should update")
 	@Transactional
 	public void updateTest() throws Exception {
 		ItemList en = TestDataUtil.nextItemList(null, nextRule(null), null);
@@ -153,7 +151,7 @@ public class ItemListControllerTest {
 	}
 
 	@Test
-	@DisplayName("ItemController should delete Rule")
+	@DisplayName("ItemListController should delete Rule")
 	@Transactional
 	public void deleteRuleTest() throws Exception {
 		ItemList en = TestDataUtil.nextItemList(null, nextRule(null), null);
@@ -176,20 +174,22 @@ public class ItemListControllerTest {
 	}
 
 	@Test
-	@DisplayName("ItemController should delete")
+	@DisplayName("ItemListController should delete")
 	@Transactional
 	public void deleteTest() throws Exception {
 		ItemList en = TestDataUtil.nextItemList(null, nextRule(null), null);
 		repository.save(en);
+		long ruleId = en.getRule().getId();
 
 		mockMvc.perform(delete("/api/list/" + en.getId()))
 		                          .andExpect(status().isOk());
 
 		assertThat(repository.findById(en.getId()), is(Optional.empty()));
+		assertThat(ruleRepository.findById(ruleId), is(Optional.empty()));
 	}
 
 	@Test
-	@DisplayName("ItemController should read all")
+	@DisplayName("ItemListController should read all")
 	@Transactional
 	public void readAllTest() throws Exception {
 		repository.deleteAll(repository.findAll());
@@ -220,14 +220,14 @@ public class ItemListControllerTest {
 	}
 
 	@Test
-	@DisplayName("ItemController should process EntityNotFoundException")
+	@DisplayName("ItemListController should process EntityNotFoundException")
 	public void entityNotFoundTest() throws Exception {
 		mockMvc.perform(get("/api/list/{id}", Long.MAX_VALUE))
 		                          .andExpect(status().isNotFound());
 	}
 
 	@Test
-	@DisplayName("ItemController should process IllegalArgumentException")
+	@DisplayName("ItemListController should process IllegalArgumentException")
 	public void illegalArgumentTest() throws Exception {
 		final ItemListDTO dto = TestDataUtil.nextItemListDTO(null, false, false);
 		mockMvc.perform(put("/api/list/")

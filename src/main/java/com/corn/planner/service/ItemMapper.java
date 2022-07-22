@@ -37,7 +37,7 @@ public class ItemMapper {
 		item.setName(dto.getName());
 		item.setOrderInList(dto.getOrderInList());
 		item.setOrderInAgenda(dto.getOrderInAgenda());
-		item.setDone(dto.getDone());
+		item.setDone(dto.isDone());
 		item.setRule(RuleMapper.toEntity(dto.getRule()));
 		item.setItemList(itemList);
 		return item;
@@ -48,7 +48,7 @@ public class ItemMapper {
 		item.setName(dto.getName());
 		item.setOrderInList(dto.getOrderInList());
 		item.setOrderInAgenda(dto.getOrderInAgenda());
-		item.setDone(dto.getDone());
+		item.setDone(dto.isDone());
 		if (dto.getRule() == null)
 			item.setRule(null);
 		else

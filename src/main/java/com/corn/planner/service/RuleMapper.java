@@ -56,12 +56,24 @@ public interface RuleMapper {
 		                             .withOnMonth(entity.getOnMonth())
 		                             .build();
 	}
-
 	static void updateRule(Rule rule, RuleDTO ruleDTO) {
-		if (ruleDTO.getId().equals(rule.getId())) {
-			BeanUtils.copyProperties(ruleDTO, rule);
-		} else {
-			throw new IllegalArgumentException("Rule id mismatch");
-		}
+		rule.setShowAtHour(ruleDTO.getShowAtHour());
+		rule.setHideAtHour(ruleDTO.getHideAtHour());
+		rule.setShowAtMinute(ruleDTO.getShowAtMinute());
+		rule.setHideAtMinute(ruleDTO.getHideAtMinute());
+		rule.setRepeatType(ruleDTO.getRepeatType());
+		rule.setEvery(ruleDTO.getEvery());
+		rule.setSun(ruleDTO.getSun());
+		rule.setMon(ruleDTO.getMon());
+		rule.setTue(ruleDTO.getTue());
+		rule.setWed(ruleDTO.getWed());
+		rule.setThu(ruleDTO.getThu());
+		rule.setFri(ruleDTO.getFri());
+		rule.setSat(ruleDTO.getSat());
+		rule.setOnDayOfMonth(ruleDTO.getOnDayOfMonth());
+		rule.setOnDayOfMonthWeek(ruleDTO.getOnDayOfMonthWeek());
+		rule.setOnDayWeek(ruleDTO.getOnDayWeek());
+		rule.setOnMonth(ruleDTO.getOnMonth());
+		rule.setCompletedAt(ruleDTO.getCompletedAt());
 	}
 }

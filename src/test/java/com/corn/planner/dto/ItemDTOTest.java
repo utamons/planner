@@ -38,7 +38,7 @@ public class ItemDTOTest {
 		assertThat(dto.getName(), is(nullValue()));
 		assertThat(dto.getOrderInList(), is(nullValue()));
 		assertThat(dto.getOrderInAgenda(), is(nullValue()));
-		assertThat(dto.getDone(), is(nullValue()));
+		assertThat(dto.isDone(), is(nullValue()));
 		assertThat(dto.getRule(), is(nullValue()));
 		assertThat(dto.getItemListId(), is(nullValue()));
 	}
@@ -69,7 +69,7 @@ public class ItemDTOTest {
 		assertThat(dto.getName(), is(name));
 		assertThat(dto.getOrderInList(), is(orderInList));
 		assertThat(dto.getOrderInAgenda(), is(orderInAgenda));
-		assertThat(dto.getDone(), is(done));
+		assertThat(dto.isDone(), is(done));
 		assertThat(dto.getRule(), is(ruleDTO));
 		assertThat(dto.getItemListId(), is(itemListId));
 	}

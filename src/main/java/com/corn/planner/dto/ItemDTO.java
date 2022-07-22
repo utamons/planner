@@ -75,7 +75,7 @@ public class ItemDTO {
 		return orderInAgenda;
 	}
 
-	public Boolean getDone() {
+	public Boolean isDone() {
 		return done;
 	}
 

@@ -47,7 +47,7 @@ public class ItemList {
 	@Column(name = "show_first")
 	private Integer showFirst;
 
-	@OneToMany(targetEntity=Item.class, mappedBy = "itemList")
+	@OneToMany(cascade = {PERSIST}, targetEntity=Item.class, mappedBy = "itemList")
 	private List<Item> items;
 
 	public void setId(Long id) {

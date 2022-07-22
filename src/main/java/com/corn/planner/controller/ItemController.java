@@ -18,6 +18,7 @@ package com.corn.planner.controller;
 
 import com.corn.planner.dto.ItemDTO;
 import com.corn.planner.service.ItemService;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -36,6 +37,7 @@ public class ItemController {
 	}
 
 	@PostMapping
+	@ResponseStatus(HttpStatus.CREATED)
 	public Long create(@Valid @RequestBody ItemDTO dto) {
 		return service.create(dto);
 	}
