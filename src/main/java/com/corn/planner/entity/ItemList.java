@@ -19,8 +19,7 @@ package com.corn.planner.entity;
 import javax.persistence.*;
 import java.util.List;
 
-import static javax.persistence.CascadeType.PERSIST;
-import static javax.persistence.CascadeType.REMOVE;
+import static javax.persistence.CascadeType.*;
 
 @SuppressWarnings("unused")
 @Entity
@@ -41,13 +40,13 @@ public class ItemList {
 	@Column(name = "order_in_agenda")
 	private Integer orderInAgenda;
 
-	@ManyToOne(cascade={PERSIST, REMOVE})
+	@ManyToOne(cascade={PERSIST, REFRESH, REMOVE})
 	private Rule rule;
 
 	@Column(name = "show_first")
 	private Integer showFirst;
 
-	@OneToMany(cascade = {PERSIST}, targetEntity=Item.class, mappedBy = "itemList")
+	@OneToMany(cascade = {PERSIST, MERGE}, mappedBy = "itemList")
 	private List<Item> items;
 
 	public void setId(Long id) {

@@ -3,8 +3,8 @@ logging:
     ROOT: ERROR
     com.corn: DEBUG
     org.springframework: WARN
-    org.hibernate: WARN
-    org.hibernate.SQL: error
+    org.hibernate: ERROR
+    org.hibernate.SQL: TRACE
     com.hazelcast: DEBUG
   pattern:
     console: "%-5d{yyyy-MM-dd HH:mm:ss.SSS} %highlight(%-5level): %cyan(%logger{25}).%yellow(%M) %m%n"

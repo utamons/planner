@@ -42,10 +42,10 @@ public class Item {
 	@Column(name = "done")
 	private Boolean done;
 
-	@ManyToOne(cascade={PERSIST, REMOVE})
+	@ManyToOne(cascade={PERSIST, REMOVE, MERGE})
 	private Rule rule;
 
-	@ManyToOne(cascade={PERSIST, REFRESH})
+	@ManyToOne(cascade={PERSIST, MERGE})
 	private ItemList itemList;
 
 	public void setId(Long id) {

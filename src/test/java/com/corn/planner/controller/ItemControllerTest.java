@@ -119,11 +119,14 @@ public class ItemControllerTest {
 	@Transactional
      public void readAllTest() throws Exception {
 		itemRepository.deleteAll(itemRepository.findAll());
+		itemListRepository.flush();
 		ItemList itemList = nextItemList(null, nextRule(null), null);
 		itemListRepository.save(itemList);
-		List<Item> items = nextList(() -> nextItem(null, itemList, nextRule(null)), 10);
+		itemListRepository.flush();
+		List<Item> items = nextList(() -> nextItem(null, itemList, nextRule(null)), 1);
 		itemList.setItems(items);
 		itemListRepository.save(itemList);
+		itemListRepository.flush();
 
 		MvcResult result = mockMvc.perform(get("/api/item/all/"+itemList.getId())
 				                                   .contentType(MediaType.APPLICATION_JSON))
@@ -171,6 +174,30 @@ public class ItemControllerTest {
 	}
 
 	@Test
+	@DisplayName("ItemController should delete Rule on update")
+	@Transactional
+	public void updateTestDeleteRule() throws Exception {
+		ItemList itemList = nextItemList(null, nextRule(null), null);
+		itemList = itemListRepository.save(itemList);
+		Item en = nextItem(null, itemList, nextRule(null));
+		en = itemRepository.save(en);
+
+		ItemDTO dto = nextItemDTO(en.getId(), itemList.getId(), null);
+
+		mockMvc.perform(put("/api/item")
+				                .contentType(MediaType.APPLICATION_JSON)
+				                .content(TestDataUtil.asJson(dto)))
+		       .andExpect(status().isOk());
+
+		assertThat(en.getName(), is(dto.getName()));
+		assertThat(en.getOrderInList(), is(dto.getOrderInList()));
+		assertThat(en.getOrderInAgenda(), is(dto.getOrderInAgenda()));
+		assertThat(en.isDone(), is(dto.isDone()));
+		assertThat(en.getItemList(), is(itemList));
+		assertThat(en.getRule(), is(nullValue()));
+	}
+
+	@Test
 	@DisplayName("ItemController should delete")
 	@Transactional
 	public void deleteTest() throws Exception {
@@ -200,8 +227,8 @@ public class ItemControllerTest {
 	@Test
 	@DisplayName("ItemController should process IllegalArgumentException")
 	public void illegalArgumentTest() throws Exception {
-		final ItemDTO dto = nextItemDTO(null, null, null);
-		mockMvc.perform(put("/api/item/")
+		final ItemDTO dto = nextItemDTO(null, 1L, null);
+		mockMvc.perform(put("/api/item")
 				                .contentType(MediaType.APPLICATION_JSON)
 				                .content(TestDataUtil.asJson(dto)))
 		       .andExpect(status().isBadRequest());

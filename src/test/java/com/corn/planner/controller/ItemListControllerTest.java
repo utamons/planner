@@ -196,6 +196,7 @@ public class ItemListControllerTest {
 		List<ItemList> en = nextList(() -> nextItemList(null, nextRule(null), null), 10);
 		repository.saveAll(en); // save all to get ids
 		en.forEach(e -> e.setItems(nextList(() -> nextItem(null, e), 10)));
+		repository.saveAll(en);
 
 		MvcResult result = mockMvc.perform(get("/api/list/all"))
 		                          .andExpect(status().isOk())
